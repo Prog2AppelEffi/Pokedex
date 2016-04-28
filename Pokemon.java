@@ -1,40 +1,38 @@
 
 public class Pokemon {
+	private int number;
+	private String name;
+	private String type1;
+	private String type2;
+	private int total;
+	private int hp;
+	private int attack;
+	private int defence;
+	private int spAtk;
+	private int spDef;
+	private int speed;
+
 	
-	private int Nr;
-	private String Name;
-	private String Type1;
-	private String Type2;
-	private int Total;
-	private int HP;
-	private int Attack;
-	private int Defence;
-	private int SpAtk;
-	private int SpDef;
-	private int Speed;
-	
-	Pokemon(int Nr, 
-			String Name, 
-			String Type1, 
-			String Type2, 
-			int Total, 
-			int HP, 
-			int Attack, 
-			int Defence,
-			int SpAtk, 
-			int SpDef, 
-			int Speed){
-		this.Nr = Nr;
-		this.Name = Name; 
-		this.Type1 = Type1;
-		this.Type2 = Type2;
-		this.Total = Total;
-		this.HP = HP;
-		this.Attack = Attack;
-		this.Defence = Defence;
-		this.SpAtk = SpAtk;
-		this.SpDef = SpDef;
-		this.Speed = Speed;
+	Pokemon(String line){
+
+		String[] parts = line.split(",");
+		
+ 		this.number = Integer.parseInt(parts[0]);
+ 		this.name = parts[1];
+ 		this.type1 = parts[2];
+ 		this.type2 = parts[3];
+ 		this.total = Integer.parseInt(parts[4]);
+ 		this.hp = Integer.parseInt(parts[5]);
+ 		this.attack = Integer.parseInt(parts[6]);
+ 		this.defence = Integer.parseInt(parts[7]);
+ 		this.spAtk = Integer.parseInt(parts[8]);
+ 		this.spDef = Integer.parseInt(parts[9]);
+ 		this.speed = Integer.parseInt(parts[10]);
+
+	}
+
+	public int getSpeed(){
+		return speed;
 	}
 	
 	public int getNr(){
