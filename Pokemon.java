@@ -34,5 +34,39 @@ public class Pokemon {
 	public int getSpeed(){
 		return speed;
 	}
+	/*
 	
+	public int getNr(){
+		return this.Nr;
+	}
+	public String getName(){
+		return this.Name;
+	}
+	public String getType1(){
+		return this.Type1;
+	}
+	public String getType2(){
+		return this.Type2;
+	}
+	public int getTotal(){
+		return this.Total;
+	}
+	public int getHP(){
+		return this.HP;
+	}
+	public int getAttack(){
+		return this.Attack;
+	}
+	public int getDefence(){
+		return this.Defence;
+	}
+	public int getSpAtk(){
+		return this.SpAtk;
+	}
+	public int getSpDef(){
+		return this.SpDef;
+	}
+	public int getSpeed(){
+		return this.Speed;
+	}*/
 }
