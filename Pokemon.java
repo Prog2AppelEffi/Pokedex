@@ -12,11 +12,15 @@ public class Pokemon {
 	private int spAtk;
 	private int spDef;
 	private int speed;
-	
-	Pokemon(String line){
+	private String[] parts;
+	private Pokemon thisPoke = null;
+	private Pokemon nextPoke = null;
+	private Pokemon prevPoke = null;
 
-		String[] parts = line.split(",");
-		
+	Pokemon(String line){
+		this.thisPoke = this;
+
+		parts = line.split(",");
  		this.number = Integer.parseInt(parts[0]);
  		this.name = parts[1];
  		this.type1 = parts[2];
@@ -31,42 +35,59 @@ public class Pokemon {
 
 	}
 
-	public int getSpeed(){
-		return speed;
+	public void setNextPoke(Pokemon nextPoke) {
+        this.nextPoke = nextPoke;
+   }
+	    
+    public void setPrevPoke(Pokemon prevPoke) {
+	    this.prevPoke = prevPoke;
+    }
+
+    public void setThisPoke(Pokemon thisPoke){
+    	this.thisPoke = thisPoke;
+    }
+
+    public Pokemon getNextPoke() {
+        return nextPoke;
+    }
+	    
+    public Pokemon getPrevPoke() {
+        return this.prevPoke;
+    }
+
+	public Pokemon getPokemon() {
+        return thisPoke;
 	}
-	/*
-	
-	public int getNr(){
-		return this.Nr;
+
+	public int getNumber(){
+		return number;
 	}
-	public String getName(){
-		return this.Name;
+
+//=========================================to String===========================================
+
+	public String toString(){
+		String full="";
+		full += insertPart(parts[0], 3);
+		full += insertPart(parts[1], 13);	
+		full += insertPart(parts[2], 8);
+		full += insertPart(parts[3], 8);
+		full += insertPart(parts[4], 3);
+		full += insertPart(parts[5], 3);
+		full += insertPart(parts[6], 3);
+		full += insertPart(parts[7], 3);
+		full += insertPart(parts[8], 3);
+		full += insertPart(parts[9], 3);
+		full += insertPart(parts[10], 3);
+		full = full.substring(0,full.length() - 3);
+		return full;
 	}
-	public String getType1(){
-		return this.Type1;
+
+	public String insertPart(String part, int spaceSize){
+		String line = "";
+		while(line.length() < (spaceSize - part.length())){
+			line += " ";
+		}
+		line += part + " | ";
+		return line;
 	}
-	public String getType2(){
-		return this.Type2;
-	}
-	public int getTotal(){
-		return this.Total;
-	}
-	public int getHP(){
-		return this.HP;
-	}
-	public int getAttack(){
-		return this.Attack;
-	}
-	public int getDefence(){
-		return this.Defence;
-	}
-	public int getSpAtk(){
-		return this.SpAtk;
-	}
-	public int getSpDef(){
-		return this.SpDef;
-	}
-	public int getSpeed(){
-		return this.Speed;
-	}*/
 }
