@@ -13,13 +13,10 @@ public class Pokemon {
 	private int spDef;
 	private int speed;
 	private String[] parts;
-	private Pokemon thisPoke = null;
 	private Pokemon nextPoke = null;
 	private Pokemon prevPoke = null;
 
 	Pokemon(String line){
-		this.thisPoke = this;
-
 		parts = line.split(",");
  		this.number = Integer.parseInt(parts[0]);
  		this.name = parts[1];
@@ -43,10 +40,6 @@ public class Pokemon {
 	    this.prevPoke = prevPoke;
     }
 
-    public void setThisPoke(Pokemon thisPoke){
-    	this.thisPoke = thisPoke;
-    }
-
     public Pokemon getNextPoke() {
         return nextPoke;
     }
@@ -56,7 +49,7 @@ public class Pokemon {
     }
 
 	public Pokemon getPokemon() {
-        return thisPoke;
+        return this;
 	}
 
 	public int getNumber(){
@@ -68,7 +61,7 @@ public class Pokemon {
 	public String toString(){
 		String full="";
 		full += insertPart(parts[0], 3);
-		full += insertPart(parts[1], 13);	
+		full += insertPart(parts[1], 15);	
 		full += insertPart(parts[2], 8);
 		full += insertPart(parts[3], 8);
 		full += insertPart(parts[4], 3);
