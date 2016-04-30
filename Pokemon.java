@@ -30,42 +30,38 @@ public class Pokemon {
  		this.speed = Integer.parseInt(parts[10]);
 
 	}
-
-	public int getSpeed(){
-		return speed;
-	}
 	
 	public int getNr(){
-		return this.Nr;
+		return this.number;
 	}
 	public String getName(){
-		return this.Name;
+		return this.name;
 	}
 	public String getType1(){
-		return this.Type1;
+		return this.type1;
 	}
 	public String getType2(){
-		return this.Type2;
+		return this.type2;
 	}
 	public int getTotal(){
-		return this.Total;
+		return this.total;
 	}
 	public int getHP(){
-		return this.HP;
+		return this.hp;
 	}
 	public int getAttack(){
-		return this.Attack;
+		return this.attack;
 	}
 	public int getDefence(){
-		return this.Defence;
+		return this.defence;
 	}
 	public int getSpAtk(){
-		return this.SpAtk;
+		return this.spAtk;
 	}
 	public int getSpDef(){
-		return this.SpDef;
+		return this.spDef;
 	}
 	public int getSpeed(){
-		return this.Speed;
+		return this.speed;
 	}
 }
