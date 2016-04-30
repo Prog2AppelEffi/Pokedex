@@ -53,7 +53,7 @@ public class DoubleLinkedList implements List {
 
 	public void insert(Pokemon p){
 		
-		//System.out.println("================hinzufügen Pokemon " + p.getNumber() + " ====================");
+		System.out.println("================hinzufügen Pokemon " + p.getNumber() + " ====================");
 	
 		if(firstPokemon == null){
 			firstPokemon = p;
@@ -101,7 +101,15 @@ public class DoubleLinkedList implements List {
 	}
 
 	public void	delete(Pokemon p){
-		
+		Pokemon current = firstPokemon;
+		while(!(current.equals(p))){
+			current = current.getNextPoke();
+		}
+		Pokemon tempPoke = current.getPrevPoke();
+		tempPoke.setNextPoke(current.getNextPoke());
+		tempPoke = current.getNextPoke();
+		tempPoke.setPrevPoke(current.getPrevPoke());
+		current = null;
 	}
 
 }	
