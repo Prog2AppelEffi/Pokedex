@@ -3,11 +3,11 @@
  * @author Jane Doe 1234567 Group 42h
  * @author John Doe 1234567 Group 42h
  */
-public class DoubleLinkedList implements List {
+public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
 
     private DoubleLinkedList prev;
     private DoubleLinkedList next;
-    private Pokemon pokemon;
+    private T pokemon;
 
     /**
      * Create a empty list
@@ -23,7 +23,7 @@ public class DoubleLinkedList implements List {
      * @param next next list element
      * @param pokemon the Pokemon
      */
-    private DoubleLinkedList(DoubleLinkedList prev, DoubleLinkedList next, Pokemon pokemon) {
+    private DoubleLinkedList(DoubleLinkedList prev, DoubleLinkedList next, T pokemon) {
         this.prev = prev;
         prev.next = this;
         this.next = next;
@@ -48,12 +48,12 @@ public class DoubleLinkedList implements List {
     }
 
     @Override
-    public Pokemon firstPokemon() {
+    public T firstPokemon() {
         return next.pokemon;
     }
 
     @Override
-    public void insert(Pokemon p) {
+    public void insert(T p) {
         DoubleLinkedList cur = next;
         while (cur.pokemon != null && cur.pokemon.getNr() < p.getNr()) {
             cur = cur.next;
@@ -62,7 +62,7 @@ public class DoubleLinkedList implements List {
     }
 
     @Override
-    public void delete(Pokemon p) {
+    public void delete(T p) {
         DoubleLinkedList cur = next;
         while (cur.pokemon != null && cur.pokemon.getNr() != p.getNr()) {
             cur = cur.next;
