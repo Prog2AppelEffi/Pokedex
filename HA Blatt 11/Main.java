@@ -17,7 +17,7 @@ public class Main {
      * @param args ignored
      */
     public static void main(String[] args) {
-        List list = new DoubleLinkedList();
+        DoubleLinkedList<Pokemon> list = new DoubleLinkedList<Pokemon>();
         BufferedReader bufferedReader;
         try {
             bufferedReader = Files.newBufferedReader(Paths.get("Pokedex.csv"));

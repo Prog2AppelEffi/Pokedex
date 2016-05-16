@@ -42,31 +42,31 @@ public interface List<T extends Comparable<T>> {
      * @param x element whose presence in this list is to be tested
      * @return true if this list contains the specified element
      */
-    boolean isInList(T x);
+    //boolean isInList(T x);
 
     /**
      * Removes the element at the front position in this list. Returns the element that was removed from the list.
      * @return the element previously at the front position
      */
-    T delete();
+    //T delete();
 
     /**
      * Returns the element at the specified position in this list.
      * @param index - index of the element to return
      * @return he element at the specified position in this list
      */
-    T get(int index);
+    //T get(int index);
 
     /**
      * Appends all of the elements in the specified list.
      * @param list list containing elements to be added to this list
      */
-    void addAll(List<T> list);
+    //void addAll(List<T> list);
 
     /**
      * Returns a list consisting of the elements of this list that match the given predicate.
      * @param predicate a non-interfering, stateless predicate to apply to each element to determine if it should be included
      * @return the new list
      */
-    List<T> filter(Predicate<T> predicate);
+    //List<T> filter(Predicate<T> predicate);
 }

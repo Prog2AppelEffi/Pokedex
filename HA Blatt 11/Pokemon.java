@@ -4,7 +4,7 @@
  * @author Jane Doe 1234567 Group 42h
  * @author John Doe 1234567 Group 42h
  */
-public class Pokemon {
+public class Pokemon implements Comparable<Pokemon>{
 
     /**
      * Enum for the Pokemon types
@@ -87,5 +87,15 @@ public class Pokemon {
     public String toString() {
         return String.format("%3d | %15s | %8s | %8s | %5d | %3d | %3d | %3d | %6d | %6d | %5d", nr, name, type1,
             type2, total, hp, attack, defence, spAtk, spDef, speed);
+    }
+
+    public int compareTo(Pokemon poke){
+        if(poke.getNr() == this.getNr()){
+            return 0;
+        } else if(poke.getNr() > this.getNr()){
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

@@ -3,10 +3,10 @@
  * @author Jane Doe 1234567 Group 42h
  * @author John Doe 1234567 Group 42h
  */
-public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
+public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ 
 
-    private DoubleLinkedList prev;
-    private DoubleLinkedList next;
+    private DoubleLinkedList<T> prev;
+    private DoubleLinkedList<T> next;
     private T pokemon;
 
     /**
@@ -23,7 +23,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
      * @param next next list element
      * @param pokemon the Pokemon
      */
-    private DoubleLinkedList(DoubleLinkedList prev, DoubleLinkedList next, T pokemon) {
+    private DoubleLinkedList(DoubleLinkedList<T> prev, DoubleLinkedList<T> next, T pokemon) {
         this.prev = prev;
         prev.next = this;
         this.next = next;
@@ -33,12 +33,12 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
 
     @Override
     public boolean isEmpty() {
-        return firstPokemon() == null;
+        return firstItem() == null;
     }
 
     @Override
     public int length() {
-        DoubleLinkedList cur = this;
+        DoubleLinkedList<T> cur = this;
         int length = 0;
         while (!cur.isEmpty()) {
             length++;
@@ -48,22 +48,22 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
     }
 
     @Override
-    public T firstPokemon() {
+    public T firstItem() {
         return next.pokemon;
     }
 
     @Override
     public void insert(T p) {
-        DoubleLinkedList cur = next;
+        DoubleLinkedList<T> cur = next;
         while (cur.pokemon != null && cur.pokemon.getNr() < p.getNr()) {
             cur = cur.next;
         }
-        new DoubleLinkedList(cur.prev, cur, p);
+        new DoubleLinkedList<T>(cur.prev, cur, p);
     }
 
     @Override
     public void delete(T p) {
-        DoubleLinkedList cur = next;
+        DoubleLinkedList<T> cur = next;
         while (cur.pokemon != null && cur.pokemon.getNr() != p.getNr()) {
             cur = cur.next;
         }
@@ -76,11 +76,13 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        DoubleLinkedList cur = this;
+        DoubleLinkedList<T> cur = this;
         while (!cur.isEmpty()) {
             stringBuilder.append(cur.firstPokemon()).append("\n");
             cur = cur.next;
         }
         return stringBuilder.toString();
     }
+
+    
 }
