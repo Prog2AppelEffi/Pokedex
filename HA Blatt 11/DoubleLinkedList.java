@@ -7,7 +7,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
 
     private DoubleLinkedList<T> prev;
     private DoubleLinkedList<T> next;
-    private T pokemon;
+    private T item;
 
     /**
      * Create a empty list
@@ -21,14 +21,14 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
      * Create a list and link a new element
      * @param prev previous list element
      * @param next next list element
-     * @param pokemon the Pokemon
+     * @param item the item
      */
-    private DoubleLinkedList(DoubleLinkedList<T> prev, DoubleLinkedList<T> next, T pokemon) {
+    private DoubleLinkedList(DoubleLinkedList<T> prev, DoubleLinkedList<T> next, T item) {
         this.prev = prev;
         prev.next = this;
         this.next = next;
         next.prev = this;
-        this.pokemon = pokemon;
+        this.item = item;
     }
 
     @Override
@@ -49,13 +49,13 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
 
     @Override
     public T firstItem() {
-        return next.pokemon;
+        return next.item;
     }
 
     @Override
     public void insert(T p) {
         DoubleLinkedList<T> cur = next;
-        while (cur.pokemon != null && cur.pokemon.getNr() < p.getNr()) {
+        while (cur.item != null && cur.item.compareTo(p) == -1 ) {
             cur = cur.next;
         }
         new DoubleLinkedList<T>(cur.prev, cur, p);
@@ -64,10 +64,10 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
     @Override
     public void delete(T p) {
         DoubleLinkedList<T> cur = next;
-        while (cur.pokemon != null && cur.pokemon.getNr() != p.getNr()) {
+        while (cur.item != null && cur.item.compareTo(p) != 0) {
             cur = cur.next;
         }
-        if (cur.pokemon != null) {
+        if (cur.item != null) {
             cur.prev.next = cur.next;
             cur.next.prev = cur.prev;
         }
@@ -78,7 +78,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
         StringBuilder stringBuilder = new StringBuilder();
         DoubleLinkedList<T> cur = this;
         while (!cur.isEmpty()) {
-            stringBuilder.append(cur.firstPokemon()).append("\n");
+            stringBuilder.append(cur.firstItem()).append("\n");
             cur = cur.next;
         }
         return stringBuilder.toString();
