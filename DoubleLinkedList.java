@@ -1,153 +1,124 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-
 /**
- * Creates a list for every Pokemon
- * @author Martin Appelmann 4685580 Group 2a 
- * @author Benjamin Effner 4633079 Group 2a
+ * Class for a circular double-ended list
+ * @author Jane Doe 1234567 Group 42h
+ * @author John Doe 1234567 Group 42h
  */
+public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ 
 
-public class DoubleLinkedList implements List {
+    private DoubleLinkedList<T> prev;
+    private DoubleLinkedList<T> next;
+    private T item;
 
-	private Pokemon firstPokemon = null;
-	private Pokemon lastPokemon = null;
-
-	/**
- 	 * Creates the List with every Pokemon from the csv
-	 */
-
-	public DoubleLinkedList() {
-		try {
-			BufferedReader br = Files.newBufferedReader(Paths.get("Pokedex.csv"));
-			String line = null;
-			br.readLine();
-			while ((line = br.readLine()) != null) {
-				if (!line.equals("")) {
-					insert(new Pokemon(line));
-				}	
-			}
-		} catch (IOException ioe) {
-
-		}
-	}
-
-	/**
-     * Inserts the specified Pokemon in this list.
-     * @param p Pokemon to be inserted
+    /**
+     * Create a empty list
      */
-	
-	public void insert(Pokemon p) {
-		Pokemon tempPoke;
-		if (firstPokemon == null) {
-			firstPokemon = p;
-			lastPokemon = firstPokemon;
-		} else {
-			if (p.getNumber() < firstPokemon.getNumber()) {
-				tempPoke = firstPokemon;
-				firstPokemon = p;
-				firstPokemon.setNextPoke(tempPoke);
-				tempPoke.setPrevPoke(firstPokemon);
-			} else {
-				tempPoke = firstPokemon.getNextPoke();
-				while (p.getNumber() > tempPoke.getNumber()) {
-					if (tempPoke == lastPokemon) {
-						tempPoke.setNextPoke(p);
-						p.setPrevPoke(tempPoke);
-						lastPokemon = p;
-						return;
-					} else {
-						tempPoke = tempPoke.getNextPoke();
-					}
-				}
-				p.setNextPoke(tempPoke);
-				p.setPrevPoke(tempPoke.getPrevPoke());
-				tempPoke.getPrevPoke().setNextPoke(p);
-				tempPoke.setPrevPoke(p);
-			}
-		}
-	}
+    public DoubleLinkedList() {
+        this.prev = this;
+        this.next = this;
+    }
 
-	/**
-     * Removes the first occurrence of the Pokemon from this list, if it is present.
-     * @param p Pokemon to be removed from this list, if present
+    /**
+     * Create a list and link a new element
+     * @param prev previous list element
+     * @param next next list element
+     * @param item the item
      */
+    private DoubleLinkedList(DoubleLinkedList<T> prev, DoubleLinkedList<T> next, T item) {
+        this.prev = prev;
+        prev.next = this;
+        this.next = next;
+        next.prev = this;
+        this.item = item;
+    }
 
-	public void	delete(Pokemon p) {
-		Pokemon tempPoke = firstPokemon;
-		while (!(tempPoke.equals(p))) {
-			tempPoke = tempPoke.getNextPoke();
-			if (tempPoke == null) {
-				System.out.println("Pokemon not found.");
-				return;
-			}
-		}
-		if (tempPoke == firstPokemon) {
-			tempPoke.getNextPoke().setPrevPoke(null);
-			firstPokemon = tempPoke.getNextPoke();
-			tempPoke = null;
-		} else if (tempPoke == lastPokemon) {
-			lastPokemon = tempPoke.getPrevPoke();
-			tempPoke.getPrevPoke().setNextPoke(null);
-			tempPoke = null;
-		} else {
-			tempPoke.getNextPoke().setPrevPoke(tempPoke.getPrevPoke());
-			tempPoke.getPrevPoke().setNextPoke(tempPoke.getNextPoke());
-			tempPoke = null;
-		}
-	}
+    @Override
+    public boolean isEmpty() {
+        return firstItem() == null;
+    }
 
-	/**
-	 * Returns a String with the whole content of the list
-	 * @return String containing all listelements
-	 */
+    @Override
+    public int length() {
+        DoubleLinkedList<T> cur = this;
+        int length = 0;
+        while (!cur.isEmpty()) {
+            length++;
+            cur = cur.next;
+        }
+        return length;
+    }
 
-	public String toString() {
-		Pokemon poke = firstPokemon;
-		String list = " Nr |       Name      |  Type 1  |  Type 2  | Total |  HP | Atk | Def | Sp Atk | Sp Def | Speed\n";
-		list += "------------------------------------------------------------------------------------------------\n";
-		while (poke != null) {
-			list += poke.toString() + "\n";
-			poke = poke.getNextPoke();
-		}
-		return list;
-	}
+    @Override
+    public T firstItem() {
+        return next.item;
+    }
+    
+    public T get(int i){
+    	DoubleLinkedList<T> cur = prev;
+    	int c = 0;
+    	while (c <= i) {
+    		c++;
+            cur = cur.next;
+        }
+    	return cur.item;
+    }
 
-	/**
-	 * Returns true if this list contains no elements.
-	 * @return true if this list contains no elements
-	 */
+    @Override
+    public void insert(T p) {
+        DoubleLinkedList<T> cur = next;
+        while (cur.item != null && cur.item.compareTo(p) == -1 ) {
+            cur = cur.next;
+        }
+        new DoubleLinkedList<T>(cur.prev, cur, p);
+    }
 
-	public boolean isEmpty() {
-		if (firstPokemon == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    @Override
+    public void delete(T p) {
+        DoubleLinkedList<T> cur = next;
+        while (cur.item != null && cur.item.compareTo(p) != 0) {
+            cur = cur.next;
+        }
+        if (cur.item != null) {
+            cur.prev.next = cur.next;
+            cur.next.prev = cur.prev;
+        }
+    }
+    
+    public T delete() {
+    	DoubleLinkedList<T> cur = next;
+    	cur.prev.next = cur.next;
+        cur.next.prev = cur.prev;
+    	return cur.item;
+    	//return first.getObj();
+        
+    }
+    
+    public boolean isInList(T x) {
+    	DoubleLinkedList<T> cur = next;
+    	if(x == null){
+    		return false;
+    	}
+        while(cur != null) {
+            if(x.equals(cur.item))
+                return true;
+            cur = cur.next;
+        }
+        return false;
+    }
+    public void addAll(DoubleLinkedList<T> list) {
+        for (int i = 1; i < list.length()+1; i++) {
+            this.insert(list.get(i));
+        }
+    }
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        DoubleLinkedList<T> cur = this;
+        while (!cur.isEmpty()) {
+            stringBuilder.append(cur.firstItem()).append("\n");
+            cur = cur.next;
+        }
+        return stringBuilder.toString();
+    }
 
-	/**
-	 * Returns the number of elements in this list.
-	 * @return the number of elements in this list
-	 */
-
-	public int length() {
-		int counter = 0;
-		Pokemon tempPoke = firstPokemon;
-		while (tempPoke != null) {
-			counter++;
-			tempPoke = tempPoke.getNextPoke();
-		}
-		return counter;
-	}
-
-	/**
-	 * Retrieves, but does not remove, the first Pokemon of this list, or returns null if this list is empty.
-	 * @return the first Pokemon of this list, or null if this list is empty
-	 */
-
-	public Pokemon firstPokemon() {
-		return firstPokemon;
-	}
-}	
+    
+}

@@ -1,131 +1,101 @@
 /**
- * @author Martin Appelmann 4685580 Group 2a 
- * @author Benjamin Effner 4633079 Group 2a
+ * Class for a Pokemon with all attributes
+ *
+ * @author Jane Doe 1234567 Group 42h
+ * @author John Doe 1234567 Group 42h
  */
+public class Pokemon implements Comparable<Pokemon>{
 
-public class Pokemon {
-	
-	private int number;
-	private String name;
-	private String type1;
-	private String type2;
-	private int total;
-	private int hp;
-	private int attack;
-	private int defence;
-	private int spAtk;
-	private int spDef;
-	private int speed;
-	private String[] parts;
-	private Pokemon nextPoke = null;
-	private Pokemon prevPoke = null;
-
-	/**
-	 * Creates a new Pokemon object with all the values
-	 * @param line is a line from the csv, that is splitted on every ','
-	 */
-
-	Pokemon(String line) {
-		parts = line.split(",");
- 		this.number = Integer.parseInt(parts[0]);
- 		this.name = parts[1];
- 		this.type1 = parts[2];
- 		this.type2 = parts[3];
- 		this.total = Integer.parseInt(parts[4]);
- 		this.hp = Integer.parseInt(parts[5]);
- 		this.attack = Integer.parseInt(parts[6]);
- 		this.defence = Integer.parseInt(parts[7]);
- 		this.spAtk = Integer.parseInt(parts[8]);
- 		this.spDef = Integer.parseInt(parts[9]);
- 		this.speed = Integer.parseInt(parts[10]);
-	}
-
-	/**
-	 * Sets the Pokemon following this one
-	 * @param nextPoke is the next Pokemon
-	 */
-
-	public void setNextPoke(Pokemon nextPoke) {
-        this.nextPoke = nextPoke;
+    /**
+     * Enum for the Pokemon types
+     */
+    public enum Type {
+        Bug, Dark, Dragon, Electric, Fairy, Fighting, Fire, Flying, Ghost,
+        Grass, Ground, Ice, Normal, None, Poison, Psychic, Rock, Steel, Water
     }
-	    
-	/**
-	 * Sets the Pokemon preceding the current one
-	 * @param prevPoke is the previous pokemon
-	 */
 
-    public void setPrevPoke(Pokemon prevPoke) {
-	    this.prevPoke = prevPoke;
+    private int nr;
+    private String name;
+    private Type type1;
+    private Type type2;
+    private int total;
+    private int hp;
+    private int attack;
+    private int defence;
+    private int spAtk;
+    private int spDef;
+    private int speed;
+
+    /**
+     * Create a new Pokemon
+     *
+     * @param nr      Pokedex index
+     * @param name    name
+     * @param type1   first type
+     * @param type2   second type
+     * @param total   sum of all stats
+     * @param hp      hit points
+     * @param attack  attack power
+     * @param defence defence power
+     * @param spAtk   special attack power
+     * @param spDef   special defence power
+     * @param speed   speed
+     */
+    public Pokemon(String nr, String name, String type1, String type2, String total, String hp, String attack, String defence, String
+        spAtk, String spDef, String speed) {
+        this(Integer.parseInt(nr), name, type1.isEmpty() ? Type.None : Type.valueOf(type1),
+            type2.isEmpty() ? Type.None : Type.valueOf(type2), Integer.parseInt(total),
+            Integer.parseInt(hp), Integer.parseInt(attack), Integer.parseInt(defence),
+            Integer.parseInt(spAtk), Integer.parseInt(spDef), Integer.parseInt(speed));
     }
 
     /**
-	 * returns the pokemon following the current one
-	 * @return the Pokemon following this one
-	 */
-
-    public Pokemon getNextPoke() {
-        return nextPoke;
-    }
-	
-	/**
-     * @return the pokemon preceding the current one
+     * Create a new Pokemon
+     *
+     * @param nr      Pokedex index
+     * @param name    name
+     * @param type1   first type
+     * @param type2   second type
+     * @param total   sum of all stats
+     * @param hp      hit points
+     * @param attack  attack power
+     * @param defence defence power
+     * @param spAtk   special attack power
+     * @param spDef   special defence power
+     * @param speed   speed
      */
-
-    public Pokemon getPrevPoke() {
-        return this.prevPoke;
+    public Pokemon(int nr, String name, Type type1, Type type2, int total, int hp, int attack, int defence, int
+        spAtk, int spDef, int speed) {
+        this.nr = nr;
+        this.name = name;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.total = total;
+        this.hp = hp;
+        this.attack = attack;
+        this.defence = defence;
+        this.spAtk = spAtk;
+        this.spDef = spDef;
+        this.speed = speed;
     }
 
-    /**
-     * @return the current Pokemon
-     */
+    public int getNr() {
+        return nr;
+    }
 
-	public Pokemon getPokemon() {
-        return this;
-	}
+    @Override
+    public String toString() {
+        return String.format("%3d | %15s | %8s | %8s | %5d | %3d | %3d | %3d | %6d | %6d | %5d", nr, name, type1,
+            type2, total, hp, attack, defence, spAtk, spDef, speed);
+    }
 
-	/**
-	 * @return the Index of the current Pokemon
-	 */
-
-	public int getNumber() {
-		return number;
-	}
-
-	/**
- 	 * Creates one large String filled with all parts and formatted to the given pattern
-	 * @return String with every data of the Pokemon
- 	 */
-
-	public String toString() {
-		String full = "";
-		full += insertPart(parts[0], 3);
-		full += insertPart(parts[1], 15);	
-		full += insertPart(parts[2], 8);
-		full += insertPart(parts[3], 8);
-		full += insertPart(parts[4], 5);
-		full += insertPart(parts[5], 3);
-		full += insertPart(parts[6], 3);
-		full += insertPart(parts[7], 3);
-		full += insertPart(parts[8], 6);
-		full += insertPart(parts[9], 6);
-		full += insertPart(parts[10], 5);
-		full = full.substring(0, full.length() - 3);
-		return full;
-	}
-
-	/**
- 	 * Formats the lineoutput to match the given pattern
-	 * @param part is the part which has to be output
-	 * @param spaceSize is the amount of positions the part has to fill
-	 * @return String with the part filled to the spaceSize
-	 */
-
-	public String insertPart(String part, int spaceSize) {
-		String line = "";
-		while (line.length() < (spaceSize - part.length())) {
-			line += " ";
-		}
-		line += part + " | ";
-		return line;
-	}
+    public int compareTo(Pokemon poke){
+        if(poke.getNr() == this.getNr()){
+            return 0;
+        } else if(poke.getNr() > this.getNr()){
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
