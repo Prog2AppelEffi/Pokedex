@@ -104,7 +104,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
         }
         return false;
     }
-    public void addAll(DoubleLinkedList<T> list) {
+    public void addAll(List<T> list){
         for (int i = 1; i < list.length()+1; i++) {
             this.insert(list.get(i));
         }

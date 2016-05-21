@@ -33,7 +33,7 @@ public class Main {
         //System.out.println(list.get(3));
         DoubleLinkedList<Episode> copy = new DoubleLinkedList<Episode>();
         copy.addAll(list);
-        System.out.println(list);
+        System.out.println(copy);
     	
     }
     
