@@ -1,10 +1,10 @@
 /**
  * Class for a Pokemon with all attributes
  *
- * @author Jane Doe 1234567 Group 42h
- * @author John Doe 1234567 Group 42h
+	* @author Martin Appelmann 4685580 Group 2a 
+	* @author Benjamin Effner 4633079 Group 2a
  */
-public class Pokemon implements Comparable<Pokemon>{
+public class Pokemon implements Comparable<Pokemon> {
 
     /**
      * Enum for the Pokemon types
@@ -88,11 +88,18 @@ public class Pokemon implements Comparable<Pokemon>{
         return String.format("%3d | %15s | %8s | %8s | %5d | %3d | %3d | %3d | %6d | %6d | %5d", nr, name, type1,
             type2, total, hp, attack, defence, spAtk, spDef, speed);
     }
-
-    public int compareTo(Pokemon poke){
-        if(poke.getNr() == this.getNr()){
+    public Type getType2() {
+    	return this.type2;
+    }
+/**
+Vergleicht zwei pokemon anhand ihrer Nummer
+@param poke das zu vergleichende Pokemon
+@return int 0 wenn die nummer gleich ist
+*/
+    public int compareTo(Pokemon poke) {
+        if (poke.getNr() == this.getNr()) {
             return 0;
-        } else if(poke.getNr() > this.getNr()){
+        } else if (poke.getNr() > this.getNr()) {
             return -1;
         } else {
             return 1;

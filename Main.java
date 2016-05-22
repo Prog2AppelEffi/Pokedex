@@ -2,11 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+//import java.util.function.Predicate;
 
 /**
  * Class for the Main method
- * @author Jane Doe 1234567 Group 42h
- * @author John Doe 1234567 Group 42h
+	* @author Martin Appelmann 4685580 Group 2a 
+	* @author Benjamin Effner 4633079 Group 2a
  */
 public class Main {
 
@@ -17,27 +18,24 @@ public class Main {
      * @param args ignored
      */
     public static void main(String[] args) {
-        /*DoubleLinkedList<Pokemon> list = new DoubleLinkedList<Pokemon>();
-        initPokemon(list, "Pokedex.csv");
+    	DoubleLinkedList<Episode> episoden = new DoubleLinkedList<Episode>();
+        initEpisode(episoden, "singleepi.csv");
+        DoubleLinkedList<Episode> ersteStaffel = (DoubleLinkedList<Episode>) episoden.filter(new FilterFirstSeason());
+        DoubleLinkedList<Episode> bis2005 = (DoubleLinkedList<Episode>) episoden.filter(new FilterYear());
+        
+        DoubleLinkedList<Pokemon> pokemon = new DoubleLinkedList<Pokemon>();
+        initPokemon(pokemon, "Pokedex.csv");
+        DoubleLinkedList<Pokemon> ersteGeneration = (DoubleLinkedList<Pokemon>) pokemon.filter(new FilterFirstGeneration());
+        DoubleLinkedList<Pokemon> keinTyp2 = (DoubleLinkedList<Pokemon>) pokemon.filter(new FilterNoMix());
         
     	
-        System.out.printf("Pokemon: %d %n%n", list.length()); // Optional
-
-        System.out.printf("%3s | %15s | %8s | %8s | %5s | %3s | %3s | %3s | %6s | %6s | %5s%n", "Nr", "Name", "Type 1",
-            "Type 2", "Total", "HP", "Atk", "Def", "Sp Atk", "Sp Def", "Speed");
-        System.out.println("-----------------------------------------------------------------------------------------------");
-        System.out.println(list);
-        */
-    	DoubleLinkedList<Episode> list = new DoubleLinkedList<Episode>();
-        initEpisode(list, "singleepi.csv");
-        //System.out.println(list.get(3));
-        DoubleLinkedList<Episode> copy = new DoubleLinkedList<Episode>();
-        copy.addAll(list);
-        System.out.println(copy);
-    	
     }
-    
-    public static void initPokemon(List<Pokemon> list, String filename){
+    /**
+	Initialisiert eine Episodenliste
+	@param filename der name der einzulesenden Datei
+	@param list die bereits erstellte liste
+	*/    
+    public static void initPokemon(List<Pokemon> list, String filename) {
     	BufferedReader bufferedReader;
         try {
             bufferedReader = Files.newBufferedReader(Paths.get(filename));
@@ -48,7 +46,7 @@ public class Main {
                 if (!line.equals("")) {
                     data = line.split(",");
                     list.insert(new Pokemon(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-                    data[8], data[9], data[10]));
+                        data[8], data[9], data[10]));
                 }
             }
             bufferedReader.close();
@@ -57,8 +55,12 @@ public class Main {
             return;
         }
     }
-    
-    public static void initEpisode(List<Episode> list, String filename){
+    /**
+	Initialisiert eine Episodenliste
+	@param filename der name der einzulesenden Datei
+	@param list die bereits erstellte liste
+	*/
+    public static void initEpisode(List<Episode> list, String filename) {
     	BufferedReader bufferedReader;
         try {
             bufferedReader = Files.newBufferedReader(Paths.get(filename));

@@ -1,9 +1,12 @@
+import java.util.function.Predicate;
+
 /**
  * Class for a circular double-ended list
- * @author Jane Doe 1234567 Group 42h
- * @author John Doe 1234567 Group 42h
+ * @author Martin Appelmann 4685580 Group 2a 
+ * @author Benjamin Effner 4633079 Group 2a
+ @param <T> ein doppelt verkettetes Element der Liste
  */
-public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{ 
+public class DoubleLinkedList<T extends Comparable<T>> implements List<T> { 
 
     private DoubleLinkedList<T> prev;
     private DoubleLinkedList<T> next;
@@ -51,8 +54,13 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
     public T firstItem() {
         return next.item;
     }
-    
-    public T get(int i){
+	
+     /**
+     * Returns the element at the specified position in this list.
+     * @param i - index of the element to return
+     * @return he element at the specified position in this list
+     */
+    public T get(int i) {
     	DoubleLinkedList<T> cur = prev;
     	int c = 0;
     	while (c <= i) {
@@ -82,30 +90,42 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
             cur.next.prev = cur.prev;
         }
     }
-    
+	/**
+     * Removes the element at the front position in this list. Returns the element that was removed from the list.
+     * @return the element previously at the front position
+     */
     public T delete() {
     	DoubleLinkedList<T> cur = next;
     	cur.prev.next = cur.next;
         cur.next.prev = cur.prev;
-    	return cur.item;
-    	//return first.getObj();
-        
+    	return cur.item;        
     }
-    
+    /**
+	prueft ob ein Objekt in einer liste ist
+	@param x das zu suchende Objekt
+	@return true wenn es enthalten ist
+	*/
     public boolean isInList(T x) {
     	DoubleLinkedList<T> cur = next;
-    	if(x == null){
+    	if (x == null) {
     		return false;
     	}
-        while(cur != null) {
-            if(x.equals(cur.item))
+        while (cur != null) {
+            if (x.equals(cur.item)) {
                 return true;
+			}
             cur = cur.next;
         }
         return false;
     }
-    public void addAll(List<T> list){
-        for (int i = 1; i < list.length()+1; i++) {
+	
+	
+	/**
+	fuegt alle Elemente einer Liste zu einer anderen zu. Die reihenfolge wird dabei umgedreht
+	@param list ist die zu kopierende liste
+	*/
+    public void addAll(List<T> list) {
+        for (int i = 1; i < list.length() + 1; i++) {
             this.insert(list.get(i));
         }
     }
@@ -118,6 +138,26 @@ public class DoubleLinkedList<T extends Comparable<T>> implements List<T>{
             cur = cur.next;
         }
         return stringBuilder.toString();
+    }
+    
+	/**
+	Allgemeine Filterfunktion. Benutzt Predicatefunktionen.
+	@param predicate ist der angewendete Filter
+	@return gibt eine Liste aus
+	*/
+    public List<T> filter(Predicate<T> predicate) {
+    	DoubleLinkedList<T> list = new DoubleLinkedList<T>();
+		DoubleLinkedList<T> cur = next;
+		if (cur == null) {
+			System.out.println("Cur ist null");
+		}
+		while (cur.item != null) {
+			if (predicate.test((T) cur.item)) {
+				list.insert((T) cur.item);
+    		}
+			cur = cur.next;
+    	}
+		return list;
     }
 
     
